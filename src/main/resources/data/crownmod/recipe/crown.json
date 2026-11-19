@@ -7,12 +7,8 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "E": {
-      "item": "minecraft:emerald"
-    }
+    "G": "minecraft:gold_ingot",
+    "E": "minecraft:emerald"
   },
   "result": {
     "id": "crownmod:crown",
