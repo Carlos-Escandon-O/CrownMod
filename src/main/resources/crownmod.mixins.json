@@ -1,14 +1,13 @@
 {
 	"required": true,
+	"aliases": [],
 	"package": "com.carlosescandon.crownmod.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"CrownModMixin"
+		"VillagerMixin",
+		"MerchantOfferMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
 	}
 }

@@ -33,6 +33,9 @@ public class CrownMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	/** true cuando un jugador con la corona puesta abre el comercio */
+	public static volatile boolean discountActive = false;
+
 	public static final ResourceKey<Item> CROWN_ID =
 		ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(MOD_ID, "crown"));
 	public static final Item CROWN = new Item(new Item.Properties()
