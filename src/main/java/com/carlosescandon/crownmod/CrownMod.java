@@ -8,6 +8,8 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -31,7 +33,12 @@ public class CrownMod implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static final Item CROWN = new Item(new Item.Properties().stacksTo(1));
+	public static final ResourceKey<Item> CROWN_ID =
+		ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(MOD_ID, "crown"));
+	public static final Item CROWN = new Item(new Item.Properties()
+		.stacksTo(1)
+		.setId(CROWN_ID)
+		.equippable(EquipmentSlot.HEAD));
 
 	public static final CreativeModeTab CROWN_TAB = Registry.register(
 		BuiltInRegistries.CREATIVE_MODE_TAB,
