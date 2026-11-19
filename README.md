@@ -1,48 +1,76 @@
 # 👑 CrownMod
 
-Mod para **Minecraft**: si llevas puesta la corona, los aldeanos te siguen.
+Mod para **Minecraft (Java Edition, Fabric)**: si llevas puesta la corona, los aldeanos te siguen.
 
-> **Estado:** en desarrollo — el repositorio está vacío por ahora (solo este README). La idea y el diseño están acá; la implementación viene después.
+> **Estado:** scaffold del mod listo (compila con MC 26.3); la mecánica de la corona se implementa sobre esta base. Roadmap abajo.
 
 ## 💡 La idea
 
-Una corona como objeto mágico/regalía. Mientras un jugador la lleve equipada en la cabeza:
+Una corona como objeto de regalía. Mientras el jugador la lleve equipada en la cabeza:
 
-- Los **aldeanos** de alrededor lo perciben como su **líder** y lo **siguen** por el mundo de la misma forma en que seguirían a su propio personaje.
-- Al quitársela, los aldeanos se quedan quietos o vuelven a su rutina.
-- Posibilidades futuras: tradear con ellos mientras la llevas, atraer rebaños, alianza entre aldeas.
+- Los **aldeanos** cercanos lo perciben como su **líder** y lo **siguen** por el mundo.
+- Al quitársela, vuelven a sus rutinas.
 
-## 🛠️ Plan técnico (propuesto)
+## ✨ Plan / Roadmap
 
-- **Lenguaje:** Java
-- **Loader:** por definir — Fabric (recomendado por simplicidad) o NeoForge/Forge (más compatible con mods grandes)
-- **Build:** Gradle + parchment/data packs
-- **Plataforma:** Minecraft 1.21+ (la versión final depende del loader elegido)
+- [x] Proyecto base Fabric (MC 26.3, Fabric API 0.166.2, Loader 0.20.1)
+- [ ] Item `crown` (crafteo, textura propia)
+- [ ] Detección de "aldeano cerca" + corona equipada
+- [ ] IA de seguimiento (pathfinding de aldeanos hacia el portador)
+- [ ] Ajustes (radio de atracción, velocidad)
+- [ ] Publicar en Modrinth
 
-## 📦 Roadmap
+## 🛠️ Requisitos
 
-- [ ] Proyecto base del mod (Gradle, assets propios, cinta comodín `crown`)
-- [ ] Item `crown` (receta de crafteo, texturas propias)
-- [ ] Detección de "aldeano cerca" y de corona equipada
-- [ ] IA de seguimiento (pathfinding de aldeanos hacia el portador de la corona)
-- [ ] Configuración (radio de atracción, velocidad, el modo fácil/difícil)
-- [ ] Publicar build en Modrinth / CurseForge
+- **Java 25** (el template usa `sourceCompatibility = VERSION_25`)
+- Sistema operativo con soporte para Minecraft Java
 
-## Cómo probarlo (cuando exista el código)
+## 🔨 Compilar y probar
 
-1. Instala Fabric loader en tu cliente.
-2. Coloca el `.jar` compilado en `mods/`.
-3. Juega: busca aldeanos y ponte la corona → deberían seguirte.
+```bash
+# Clonar
+git clone https://github.com/Carlos-Escandon-O/CrownMod.git
+cd CrownMod
 
-## 📁 Estructura prevista
+# Compilar (genera build/libs/crownmod-<version>.jar)
+./gradlew build
+
+# Probar en cliente de desarrollo
+./gradlew runClient
+
+# Probar en servidor de desarrollo
+./gradlew runServer
+```
+
+## 📦 Instalación (cuando haya una build)
+
+1. Instala **Fabric Loader** y **Fabric API** para Minecraft 26.3.
+2. Copia `build/libs/crownmod-*.jar` a tu carpeta `mods/`.
+3. Arranca el juego.
+
+## 📁 Estructura
 
 ```
 CrownMod/
-├── src/main/java/…      # código del mod
-├── src/main/resources/  # assets, mixins, fabric.mod.json / mods.toml
-├── build.gradle
-└── README.md
+├── src/
+│   ├── main/java/com/carlosescandon/crownmod/        # código del mod
+│   │   ├── CrownMod.java                              # entrypoint principal
+│   │   └── mixin/CrownModMixin.java                   # mixins (inyectan en el juego)
+│   ├── main/resources/                                # fabric.mod.json, mixins.json
+│   │   └── assets/crownmod/                           # texturas e icono
+│   ├── client/java/com/carlosescandon/crownmod/client/
+│   │   ├── CrownModClient.java                        # entrypoint de cliente
+│   │   └── mixin/CrownModClientMixin.java             # mixins de cliente
+│   └── client/resources/
+├── build.gradle                                       # dependencias y tareas de Loom
+├── settings.gradle
+├── gradle.properties                                  # versiones: MC 26.3, loader 0.20.1, Fabric API 0.166.2+26.3
+└── gradlew / gradlew.bat                              # Gradle Wrapper
 ```
+
+## 📄 Licencia
+
+CC0-1.0 (mismo espíritu del template: haz lo que quieras).
 
 ---
 

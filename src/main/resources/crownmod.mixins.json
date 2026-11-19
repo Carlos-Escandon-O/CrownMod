@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.carlosescandon.crownmod.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"CrownModMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
