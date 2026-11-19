@@ -10,11 +10,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
 
 import org.slf4j.Logger;
@@ -40,9 +43,12 @@ public class CrownMod implements ModInitializer {
 			.build()
 	);
 
+	private CrownConfig config;
+
 	@Override
 	public void onInitialize() {
 		Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, "crown"), CROWN);
+		this.config = CrownConfig.load();
 
 		// Cada ~1 segundo, los aldeanos cercanos siguen al jugador que lleva puesta la corona.
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
@@ -55,12 +61,21 @@ public class CrownMod implements ModInitializer {
 					if (head.isEmpty() || head.getItem() != CROWN) {
 						continue;
 					}
-					AABB box = player.getBoundingBox().inflate(12.0);
+
+					AABB box = player.getBoundingBox().inflate(config.radius);
 					for (Villager villager : level.getEntitiesOfClass(Villager.class, box)) {
 						double dist = villager.distanceTo(player);
-						if (dist > 2.5) {
-							villager.getNavigation().moveTo(player, 0.6);
-						} else {
+						if (dist > config.stopDistance + 1.0) {
+							villager.getNavigation().moveTo(player, config.speed);
+							if (config.grateful && level.getRandom().nextInt(100) == 0) {
+								level.sendParticles(ParticleTypes.HEART,
+									villager.getX(), villager.getEyeY() + 0.3, villager.getZ(),
+									1, 0.1, 0.2, 0.1, 0.0);
+								level.playSound(null, villager.blockPosition(),
+									SoundEvents.VILLAGER_YES, SoundSource.NEUTRAL,
+									0.4f, 1.2f);
+							}
+						} else if (dist < config.stopDistance) {
 							villager.getNavigation().stop();
 						}
 					}
@@ -68,7 +83,8 @@ public class CrownMod implements ModInitializer {
 			}
 		});
 
-		LOGGER.info("CrownMod encendido: que los aldeanos hagan cola.");
+		LOGGER.info("CrownMod encendido: radio={} speed={} parada={} agradecidos={}",
+			config.radius, config.speed, config.stopDistance, config.grateful);
 	}
 
 	public static Identifier id(String path) {

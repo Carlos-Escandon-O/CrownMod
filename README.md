@@ -20,6 +20,17 @@ Mod para **Minecraft: Java Edition (Fabric)**. Te pones la corona y **los aldean
 
 Una corona como objeto de regalía: mientras la lleves puesta, los aldeanos te consideran su líder y te siguen.
 
+## ⚙️ Ajustes (`config/crownmod.properties`)
+
+```properties
+radius = 12.0        # radio en bloques donde los aldeanos siguen al portador
+speed = 0.6          # velocidad de caminata
+stopDistance = 1.5   # distancia a la que se paran
+grateful = true      # comerciantes agradecidos (corazones + sonido)
+```
+
+Si el archivo no existe, se crea con valores por defecto al primer arranque.
+
 ## 🛠️ Requisitos
 
 - **Java 25**
@@ -54,7 +65,8 @@ cd CrownMod
 - [x] Proyecto base Fabric (MC 26.3, Fabric API 0.166.2+26.3, Loader 0.20.1)
 - [x] Item `crown` (texturas propias, receta, pestaña creativa)
 - [x] Aldeanos siguen al portador de la corona
-- [ ] Ajustes (radio de atracción, velocidad, danzar/celebrar al seguirte)
+- [x] Comerciantes agradecidos: mientras te siguen tiran corazones y hacen un sonido de villager-yes
+- [x] Ajustes en `config/crownmod.properties` (radio, velocidad, distancia de parada)
 - [ ] Comercio mejorado con aldeanos fieles
 - [ ] Publicar en Modrinth
 
