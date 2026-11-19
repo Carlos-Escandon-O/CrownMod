@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "crownmod:crownmod"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "crownmod:crownmod"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "crownmod:crownmod"
+      }
+    ]
+  }
+}

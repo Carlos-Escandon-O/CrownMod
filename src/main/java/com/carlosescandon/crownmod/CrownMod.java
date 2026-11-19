@@ -15,12 +15,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +44,21 @@ public class CrownMod implements ModInitializer {
 
 	public static final ResourceKey<Item> CROWN_ID =
 		ResourceKey.create(BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(MOD_ID, "crown"));
+	public static final ResourceKey<EquipmentAsset> CROWN_ASSET =
+		ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(MOD_ID, "crownmod"));
+	public static final ArmorMaterial CROWN_ARMOR = new ArmorMaterial(
+		50,
+		java.util.Map.of(ArmorType.HELMET, 6),
+		15,
+		SoundEvents.ARMOR_EQUIP_GOLD,
+		0f, 0f,
+		ItemTags.REPAIRS_GOLD_ARMOR,
+		CROWN_ASSET
+	);
 	public static final Item CROWN = new Item(new Item.Properties()
 		.stacksTo(1)
 		.setId(CROWN_ID)
-		.equippable(EquipmentSlot.HEAD));
+		.humanoidArmor(CROWN_ARMOR, ArmorType.HELMET));
 
 	public static final CreativeModeTab CROWN_TAB = Registry.register(
 		BuiltInRegistries.CREATIVE_MODE_TAB,
