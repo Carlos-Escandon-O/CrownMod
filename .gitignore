@@ -1,0 +1,27 @@
+# Gradle
+.gradle/
+build/
+out/
+classes/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+bin/
+
+# Fabric / Forge
+run/
+logs/
+nohup.out*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.bak
